@@ -7,7 +7,7 @@ import streamlit as st
 
 DATA_FILE = Path(__file__).with_name("inventory_data.json")
 
-DEFAULT_CATEGORIES = ["Elektronik", "Aksesoris", "Mebel", "Alat Tulis", "Lainnya"]
+DEFAULT_CATEGORIES = ["Elektronik", "Aksesoris", "HDMI", "StopKontak", "Kabel", "Lainnya"]
 
 DEFAULT_ITEMS = [
     {
