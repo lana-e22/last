@@ -591,6 +591,10 @@ def main():
             --primary-2: #60a5fa;
             --primary-3: #1d4ed8;
             --shadow: rgba(37, 99, 235, 0.18);
+            --table-soft: #e8f8ee;
+            --table-soft-2: #d7f1e1;
+            --table-border: rgba(82, 165, 116, 0.4);
+            --table-text: #113b2e;
         }
 
         html, body, [data-testid="stAppViewContainer"] {
@@ -614,11 +618,15 @@ def main():
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid rgba(255,255,255,0.12);
+            outline: 1px solid rgba(255,255,255,0.18);
+            outline-offset: -1px;
         }
 
         [data-testid="stSidebar"] {
             background: rgba(255,255,255,0.42);
             border-right: 1px solid rgba(37,99,235,0.10);
+            outline: 1px solid rgba(37,99,235,0.10);
+            outline-offset: -1px;
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             box-shadow: 12px 0 30px rgba(37,99,235,0.08);
@@ -639,6 +647,8 @@ def main():
         div[data-testid="stMetric"] > div {
             background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(239,246,255,0.78));
             border: 1px solid var(--border);
+            outline: 1px solid rgba(59,130,246,0.18);
+            outline-offset: 0;
             border-radius: 20px;
             box-shadow: 0 14px 30px var(--shadow);
             backdrop-filter: blur(12px);
@@ -648,6 +658,45 @@ def main():
         [data-testid="stMetricLabel"],
         [data-testid="stMetricValue"] {
             color: var(--text) !important;
+        }
+
+        .stDataFrame,
+        [data-testid="stDataFrame"] {
+            background: linear-gradient(180deg, rgba(232,248,238,0.96), rgba(214,241,223,0.90));
+            border: 1px solid var(--table-border);
+            outline: 1px solid rgba(82,165,116,0.42);
+            outline-offset: 0;
+            border-radius: 16px;
+            box-shadow: 0 14px 28px rgba(71, 126, 88, 0.16);
+            overflow: hidden;
+        }
+
+        .stDataFrame > div,
+        [data-testid="stDataFrame"] > div {
+            border-radius: 16px;
+            background: transparent;
+        }
+
+        .stDataFrame th,
+        [data-testid="stDataFrame"] th {
+            background: linear-gradient(180deg, rgba(175,224,191,0.75), rgba(154,210,172,0.70));
+            color: var(--table-text);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(82,165,116,0.35);
+            outline: 1px solid rgba(82,165,116,0.18);
+        }
+
+        .stDataFrame td,
+        [data-testid="stDataFrame"] td {
+            background: rgba(255,255,255,0.16);
+            color: var(--table-text);
+            border-bottom: 1px solid rgba(82,165,116,0.20);
+            outline: 1px solid rgba(82,165,116,0.08);
+        }
+
+        .stDataFrame tr:hover td,
+        [data-testid="stDataFrame"] tr:hover td {
+            background: rgba(255,255,255,0.22);
         }
 
         .stDataFrame, .stTabs [role="tablist"],
@@ -662,6 +711,8 @@ def main():
         .stForm {
             background: rgba(255,255,255,0.70);
             border: 1px solid var(--border);
+            outline: 1px solid rgba(59,130,246,0.18);
+            outline-offset: 0;
             border-radius: 12px;
             color: var(--text);
             backdrop-filter: blur(10px);
@@ -673,6 +724,8 @@ def main():
         .stDownloadButton > button {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
             border: 1px solid rgba(255,255,255,0.75);
+            outline: 1px solid rgba(37,99,235,0.35);
+            outline-offset: 0;
             color: white !important;
             font-weight: 700;
             border-radius: 12px;
@@ -690,6 +743,8 @@ def main():
         .stTabs [role="tablist"] {
             background: rgba(255,255,255,0.56);
             border: 1px solid var(--border);
+            outline: 1px solid rgba(59,130,246,0.18);
+            outline-offset: 0;
             padding: 6px;
             border-radius: 16px;
             box-shadow: 0 8px 18px rgba(37,99,235,0.08);
@@ -712,6 +767,8 @@ def main():
         .stExpander {
             background: rgba(255,255,255,0.48);
             border: 1px solid var(--border);
+            outline: 1px solid rgba(59,130,246,0.16);
+            outline-offset: 0;
             border-radius: 16px;
             box-shadow: 0 10px 22px rgba(96,165,250,0.07);
             backdrop-filter: blur(10px);
@@ -721,12 +778,16 @@ def main():
         .stAlert {
             background: linear-gradient(135deg, rgba(191,219,254,0.68), rgba(239,246,255,0.72));
             border: 1px solid rgba(96,165,250,0.28);
+            outline: 1px solid rgba(96,165,250,0.18);
+            outline-offset: 0;
             color: var(--text);
         }
 
         .stSuccess, .stWarning, .stInfo, .stError {
             background: rgba(255,255,255,0.38);
             border: 1px solid rgba(37,99,235,0.12);
+            outline: 1px solid rgba(37,99,235,0.10);
+            outline-offset: 0;
             color: var(--text);
         }
 
