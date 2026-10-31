@@ -579,14 +579,14 @@ def main():
         """
         <style>
         :root {
-            --bg-1: #eaf4ff;
+            --bg-1: #edf6ff;
             --bg-2: #dfeeff;
-            --bg-3: #cfe3ff;
-            --panel: rgba(255, 255, 255, 0.68);
-            --panel-strong: rgba(255, 255, 255, 0.82);
-            --line: rgba(59, 130, 246, 0.18);
-            --text: #0b1f3a;
-            --muted: #44658b;
+            --bg-3: #d2e7ff;
+            --panel: rgba(255,255,255,0.64);
+            --panel-strong: rgba(255,255,255,0.85);
+            --border: rgba(37,99,235,0.22);
+            --text: #0f172a;
+            --muted: #4b6788;
             --primary: #2563eb;
             --primary-2: #60a5fa;
             --primary-3: #1d4ed8;
@@ -595,9 +595,9 @@ def main():
 
         html, body, [data-testid="stAppViewContainer"] {
             background:
-                radial-gradient(circle at top left, rgba(96, 165, 250, 0.42), transparent 26%),
-                radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.18), transparent 30%),
-                linear-gradient(135deg, var(--bg-1) 0%, #f9fbff 24%, var(--bg-2) 54%, var(--bg-3) 100%);
+                radial-gradient(circle at 15% 20%, rgba(96,165,250,0.40), transparent 18%),
+                radial-gradient(circle at 80% 82%, rgba(37,99,235,0.18), transparent 24%),
+                linear-gradient(135deg, var(--bg-1) 0%, #fafdff 25%, var(--bg-2) 52%, var(--bg-3) 100%);
             color: var(--text);
         }
 
@@ -610,18 +610,18 @@ def main():
         }
 
         [data-testid="stHeader"] {
-            background: rgba(255,255,255,0.24);
+            background: rgba(255,255,255,0.18);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid rgba(255,255,255,0.12);
         }
 
         [data-testid="stSidebar"] {
-            background: rgba(255, 255, 255, 0.46);
-            border-right: 1px solid rgba(59,130,246,0.12);
+            background: rgba(255,255,255,0.42);
+            border-right: 1px solid rgba(37,99,235,0.10);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            box-shadow: 10px 0 30px rgba(30, 64, 175, 0.06);
+            box-shadow: 12px 0 30px rgba(37,99,235,0.08);
         }
 
         .block-container {
@@ -629,58 +629,69 @@ def main():
             padding-bottom: 2rem;
         }
 
-        h1, h2, h3, h4, p, label, .stSelectbox, .stTextInput, .stNumberInput, .stTextArea, .stCheckbox, .stRadio {
+        h1, h2, h3, h4, p, label,
+        .stSelectbox, .stTextInput, .stNumberInput,
+        .stTextArea, .stCheckbox, .stRadio,
+        .stDateInput, .stFileUploader {
             color: var(--text) !important;
         }
 
         div[data-testid="stMetric"] > div {
-            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(239,246,255,0.75));
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            box-shadow: 0 12px 30px var(--shadow);
+            background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(239,246,255,0.78));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 14px 30px var(--shadow);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
 
-        [data-testid="stMetricLabel"], [data-testid="stMetricValue"] {
+        [data-testid="stMetricLabel"],
+        [data-testid="stMetricValue"] {
             color: var(--text) !important;
         }
 
-        .stDataFrame, .stTabs [role="tablist"], .stButton > button,
+        .stDataFrame, .stTabs [role="tablist"],
+        .stButton > button,
         .stTextInput > div > div > input,
         .stNumberInput > div > div > input,
         .stTextArea > div > div > textarea,
         .stSelectbox > div > div,
         .stDateInput > div > div,
-        .stFileUploader > div > div {
-            background: rgba(255,255,255,0.7);
-            border: 1px solid var(--line);
+        .stFileUploader > div > div,
+        .stDownloadButton > button,
+        .stForm {
+            background: rgba(255,255,255,0.70);
+            border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.50);
         }
 
-        .stButton > button {
+        .stButton > button,
+        .stDownloadButton > button {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-            border: 1px solid rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.75);
             color: white !important;
             font-weight: 700;
-            box-shadow: 0 12px 24px rgba(37,99,235,0.22);
             border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(37,99,235,0.20);
+            transition: all 0.2s ease;
         }
 
-        .stButton > button:hover {
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {
             background: linear-gradient(135deg, var(--primary-3) 0%, var(--primary) 100%);
-            box-shadow: 0 16px 28px rgba(37,99,235,0.28);
+            box-shadow: 0 16px 28px rgba(37,99,235,0.26);
+            transform: translateY(-1px);
         }
 
         .stTabs [role="tablist"] {
-            background: rgba(255,255,255,0.52);
-            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.56);
+            border: 1px solid var(--border);
             padding: 6px;
-            border-radius: 14px;
+            border-radius: 16px;
             box-shadow: 0 8px 18px rgba(37,99,235,0.08);
         }
 
@@ -692,28 +703,40 @@ def main():
         }
 
         .stTabs [role="tab"][aria-selected="true"] {
-            background: linear-gradient(135deg, rgba(96,165,250,0.18), rgba(37,99,235,0.08));
+            background: linear-gradient(135deg, rgba(96,165,250,0.20), rgba(37,99,235,0.08));
             border: 1px solid rgba(59,130,246,0.22);
             color: var(--text);
             font-weight: 600;
         }
 
         .stExpander {
-            background: rgba(255,255,255,0.42);
-            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.48);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            box-shadow: 0 12px 25px rgba(96,165,250,0.08);
+            box-shadow: 0 10px 22px rgba(96,165,250,0.07);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
 
         .stAlert {
-            background: linear-gradient(135deg, rgba(191,219,254,0.7), rgba(239,246,255,0.7));
-            border: 1px solid rgba(96,165,250,0.3);
+            background: linear-gradient(135deg, rgba(191,219,254,0.68), rgba(239,246,255,0.72));
+            border: 1px solid rgba(96,165,250,0.28);
             color: var(--text);
         }
 
-        .css-1d391kg, .css-18e3th9 {
+        .stSuccess, .stWarning, .stInfo, .stError {
+            background: rgba(255,255,255,0.38);
+            border: 1px solid rgba(37,99,235,0.12);
+            color: var(--text);
+        }
+
+        .stMarkdown, .stMarkdown h1, .stMarkdown h2,
+        .stMarkdown h3, .stMarkdown p {
+            color: var(--text) !important;
+        }
+
+        .css-1d391kg, .css-18e3th9,
+        .css-1cyr2pc, .css-1v0mbdj {
             color: var(--text) !important;
         }
         </style>
