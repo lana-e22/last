@@ -578,43 +578,72 @@ def main():
     st.markdown(
         """
         <style>
+        :root {
+            --bg-1: #eaf4ff;
+            --bg-2: #dfeeff;
+            --bg-3: #cfe3ff;
+            --panel: rgba(255, 255, 255, 0.68);
+            --panel-strong: rgba(255, 255, 255, 0.82);
+            --line: rgba(59, 130, 246, 0.18);
+            --text: #0b1f3a;
+            --muted: #44658b;
+            --primary: #2563eb;
+            --primary-2: #60a5fa;
+            --primary-3: #1d4ed8;
+            --shadow: rgba(37, 99, 235, 0.18);
+        }
+
         html, body, [data-testid="stAppViewContainer"] {
-            background: linear-gradient(135deg, #f5f9ff 0%, #ffffff 100%);
+            background:
+                radial-gradient(circle at top left, rgba(96, 165, 250, 0.42), transparent 26%),
+                radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.18), transparent 30%),
+                linear-gradient(135deg, var(--bg-1) 0%, #f9fbff 24%, var(--bg-2) 54%, var(--bg-3) 100%);
+            color: var(--text);
         }
 
         .stApp {
             background: transparent;
         }
 
+        section.main > div {
+            background: transparent;
+        }
+
         [data-testid="stHeader"] {
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(255,255,255,0.24);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
         }
 
         [data-testid="stSidebar"] {
-            background: rgba(255, 255, 255, 0.72);
-            border-right: 1px solid rgba(59, 130, 246, 0.12);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.46);
+            border-right: 1px solid rgba(59,130,246,0.12);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 10px 0 30px rgba(30, 64, 175, 0.06);
         }
 
         .block-container {
-            padding-top: 2rem;
+            padding-top: 2.2rem;
             padding-bottom: 2rem;
         }
 
-        h1, h2, h3, p, label, .stSelectbox, .stTextInput, .stNumberInput, .stTextArea, .stCheckbox, .stRadio {
-            color: #11335c !important;
+        h1, h2, h3, h4, p, label, .stSelectbox, .stTextInput, .stNumberInput, .stTextArea, .stCheckbox, .stRadio {
+            color: var(--text) !important;
         }
 
         div[data-testid="stMetric"] > div {
-            background: rgba(255, 255, 255, 0.88);
-            border: 1px solid rgba(96, 165, 250, 0.28);
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(239,246,255,0.75));
+            border: 1px solid var(--line);
             border-radius: 18px;
-            box-shadow: 0 12px 28px rgba(96, 165, 250, 0.18);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 12px 30px var(--shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        [data-testid="stMetricLabel"], [data-testid="stMetricValue"] {
+            color: var(--text) !important;
         }
 
         .stDataFrame, .stTabs [role="tablist"], .stButton > button,
@@ -622,57 +651,70 @@ def main():
         .stNumberInput > div > div > input,
         .stTextArea > div > div > textarea,
         .stSelectbox > div > div,
-        .stDateInput > div > div {
-            background: rgba(239, 246, 255, 0.9);
-            border: 1px solid rgba(96, 165, 250, 0.3);
+        .stDateInput > div > div,
+        .stFileUploader > div > div {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid var(--line);
             border-radius: 12px;
-            color: #123b64;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            color: var(--text);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
         }
 
         .stButton > button {
-            background: linear-gradient(135deg, #2563eb, #60a5fa);
-            border: 1px solid rgba(37, 99, 235, 0.25);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+            border: 1px solid rgba(255,255,255,0.7);
+            color: white !important;
+            font-weight: 700;
+            box-shadow: 0 12px 24px rgba(37,99,235,0.22);
+            border-radius: 12px;
         }
 
         .stButton > button:hover {
-            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            background: linear-gradient(135deg, var(--primary-3) 0%, var(--primary) 100%);
+            box-shadow: 0 16px 28px rgba(37,99,235,0.28);
         }
 
         .stTabs [role="tablist"] {
-            background: rgba(239, 246, 255, 0.85);
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            padding: 4px;
+            background: rgba(255,255,255,0.52);
+            border: 1px solid var(--line);
+            padding: 6px;
+            border-radius: 14px;
+            box-shadow: 0 8px 18px rgba(37,99,235,0.08);
         }
 
         .stTabs [role="tab"] {
             background: transparent;
-            color: #1e3a5f;
+            color: var(--muted);
             border-radius: 10px;
+            padding: 0.45rem 0.9rem;
         }
 
         .stTabs [role="tab"][aria-selected="true"] {
-            background: rgba(96, 165, 250, 0.18);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            background: linear-gradient(135deg, rgba(96,165,250,0.18), rgba(37,99,235,0.08));
+            border: 1px solid rgba(59,130,246,0.22);
+            color: var(--text);
+            font-weight: 600;
         }
 
         .stExpander {
-            background: rgba(255, 255, 255, 0.72);
-            border: 1px solid rgba(96, 165, 250, 0.18);
-            border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(96, 165, 250, 0.08);
+            background: rgba(255,255,255,0.42);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 12px 25px rgba(96,165,250,0.08);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
 
         .stAlert {
-            background: rgba(239, 246, 255, 0.9);
-            border: 1px solid rgba(96, 165, 250, 0.18);
-            color: #0f172a;
+            background: linear-gradient(135deg, rgba(191,219,254,0.7), rgba(239,246,255,0.7));
+            border: 1px solid rgba(96,165,250,0.3);
+            color: var(--text);
+        }
+
+        .css-1d391kg, .css-18e3th9 {
+            color: var(--text) !important;
         }
         </style>
         """,
