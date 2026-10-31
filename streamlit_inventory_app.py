@@ -575,6 +575,110 @@ def sidebar_actions(data):
 
 def main():
     st.set_page_config(page_title="Inventaris MWA", layout="wide")
+    st.markdown(
+        """
+        <style>
+        html, body, [data-testid="stAppViewContainer"] {
+            background: linear-gradient(135deg, #f5f9ff 0%, #ffffff 100%);
+        }
+
+        .stApp {
+            background: transparent;
+        }
+
+        [data-testid="stHeader"] {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        [data-testid="stSidebar"] {
+            background: rgba(255, 255, 255, 0.72);
+            border-right: 1px solid rgba(59, 130, 246, 0.12);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .block-container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        h1, h2, h3, p, label, .stSelectbox, .stTextInput, .stNumberInput, .stTextArea, .stCheckbox, .stRadio {
+            color: #11335c !important;
+        }
+
+        div[data-testid="stMetric"] > div {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(96, 165, 250, 0.28);
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(96, 165, 250, 0.18);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .stDataFrame, .stTabs [role="tablist"], .stButton > button,
+        .stTextInput > div > div > input,
+        .stNumberInput > div > div > input,
+        .stTextArea > div > div > textarea,
+        .stSelectbox > div > div,
+        .stDateInput > div > div {
+            background: rgba(239, 246, 255, 0.9);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 12px;
+            color: #123b64;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .stButton > button {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .stButton > button:hover {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        }
+
+        .stTabs [role="tablist"] {
+            background: rgba(239, 246, 255, 0.85);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            padding: 4px;
+        }
+
+        .stTabs [role="tab"] {
+            background: transparent;
+            color: #1e3a5f;
+            border-radius: 10px;
+        }
+
+        .stTabs [role="tab"][aria-selected="true"] {
+            background: rgba(96, 165, 250, 0.18);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .stExpander {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(96, 165, 250, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .stAlert {
+            background: rgba(239, 246, 255, 0.9);
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            color: #0f172a;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
 
     data = load_data()
