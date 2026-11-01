@@ -642,7 +642,7 @@ def main():
     unsafe_allow_html=True,
 )
 
-         st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
+    st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
 
             data = load_data()
         sidebar_actions(data)
