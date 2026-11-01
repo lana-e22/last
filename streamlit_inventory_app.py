@@ -6,6 +6,7 @@ import pandas as pd
 import streamlit as st
 
 DATA_FILE = Path(__file__).with_name("inventory_data.json")
+BACKGROUND_IMAGE = Path(__file__).with_name("background.jpg")
 
 DEFAULT_CATEGORIES = ["Elektronik", "Aksesoris", "HDMI", "StopKontak", "Kabel", "Lainnya"]
 
@@ -582,10 +583,11 @@ def sidebar_actions(data):
 
 def main():
     st.set_page_config(page_title="Inventaris MWA", layout="wide")
+    background_style = "" if not BACKGROUND_IMAGE.exists() else f"url('{BACKGROUND_IMAGE.name}')"
     st.markdown(
-        """
+        f"""
         <style>
-        :root {
+        :root {{
             --bg-1: #edf7ff;
             --bg-2: #e4f1ff;
             --bg-3: #dfeeff;
@@ -596,44 +598,45 @@ def main():
             --primary-3: #1d4ed8;
             --table-border: rgba(22,163,74,0.20);
             --table-text: #17372d;
-        }
+        }}
 
-        html, body, [data-testid="stAppViewContainer"] {
+        html, body, [data-testid="stAppViewContainer"] {{
             color-scheme: light;
-            background:
-                radial-gradient(circle at 15% 20%, rgba(96,165,250,0.25), transparent 18%),
-                radial-gradient(circle at 80% 82%, rgba(59,130,246,0.18), transparent 22%),
-                linear-gradient(135deg, var(--bg-1) 0%, #f7fbff 26%, var(--bg-2) 52%, var(--bg-3) 100%);
+            background-image: linear-gradient(rgba(237, 247, 255, 0.72), rgba(237, 247, 255, 0.72)), {background_style};
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: var(--text);
-        }
+        }}
 
-        .stApp { background: transparent; }
-        section.main > div { background: transparent; }
+        .stApp {{ background: transparent; }}
+        section.main > div {{ background: transparent; }}
 
-        [data-testid="stHeader"] {
+        [data-testid="stHeader"] {{
             background: rgba(255,255,255,0.58);
             border-bottom: 1px solid rgba(37,99,235,0.08);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             box-shadow: 0 4px 18px rgba(37,99,235,0.06);
-        }
+        }}
 
-        [data-testid="stSidebar"] {
+        [data-testid="stSidebar"] {{
             background: rgba(255,255,255,0.74);
             border-right: 1px solid rgba(37,99,235,0.10);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             box-shadow: 12px 0 30px rgba(37,99,235,0.06);
-        }
+        }}
 
-        .block-container { padding-top: 2.2rem; padding-bottom: 2rem; }
+        .block-container {{ padding-top: 2.2rem; padding-bottom: 2rem; }}
 
         h1, h2, h3, h4, p, label,
         .stSelectbox, .stTextInput, .stNumberInput,
         .stTextArea, .stCheckbox, .stRadio,
-        .stDateInput, .stFileUploader {
+        .stDateInput, .stFileUploader {{
             color: var(--text) !important;
-        }
+        }}
 
         div[data-testid="stMetric"] > div,
         .stDataFrame,
@@ -651,7 +654,7 @@ def main():
         .stExpander,
         .stAlert,
         [data-testid="stVerticalBlock"] > div,
-        [data-testid="stSidebar"] [data-testid="stVerticalBlock"] > div {
+        [data-testid="stSidebar"] [data-testid="stVerticalBlock"] > div {{
             background: rgba(255,255,255,0.86);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -659,29 +662,29 @@ def main():
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 8px 22px rgba(37,99,235,0.08), inset 0 1px 0 rgba(255,255,255,0.72);
-        }
+        }}
 
-        .stMetric > div {
+        .stMetric > div {{
             box-shadow: 0 12px 26px rgba(37,99,235,0.1);
-        }
+        }}
 
         .stDataFrame th,
-        [data-testid="stDataFrame"] th {
+        [data-testid="stDataFrame"] th {{
             background: linear-gradient(180deg, rgba(214,245,224,0.88), rgba(190,232,208,0.82));
             color: var(--table-text);
             font-weight: 700;
             border-bottom: 1px solid rgba(22,163,74,0.22);
-        }
+        }}
 
         .stDataFrame td,
-        [data-testid="stDataFrame"] td {
+        [data-testid="stDataFrame"] td {{
             background: rgba(255,255,255,0.20);
             color: var(--table-text);
             border-bottom: 1px solid rgba(22,163,74,0.10);
-        }
+        }}
 
         .stButton > button,
-        .stDownloadButton > button {
+        .stDownloadButton > button {{
             background: linear-gradient(135deg, var(--primary) 0%, #1d5ae5 100%);
             border: 1px solid rgba(37,99,235,0.15);
             color: white !important;
@@ -689,47 +692,47 @@ def main():
             border-radius: 12px;
             box-shadow: 0 10px 22px rgba(37,99,235,0.18);
             transition: all 0.2s ease;
-        }
+        }}
 
         .stButton > button:hover,
-        .stDownloadButton > button:hover {
+        .stDownloadButton > button:hover {{
             background: linear-gradient(135deg, var(--primary-3) 0%, var(--primary) 100%);
             box-shadow: 0 14px 26px rgba(37,99,235,0.22);
             transform: translateY(-1px);
-        }
+        }}
 
-        .stTabs [role="tablist"] {
+        .stTabs [role="tablist"] {{
             background: rgba(255,255,255,0.76);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 6px;
             box-shadow: 0 8px 18px rgba(37,99,235,0.08);
-        }
+        }}
 
-        .stTabs [role="tab"] {
+        .stTabs [role="tab"] {{
             background: transparent;
             color: var(--muted);
             border-radius: 10px;
             padding: 0.45rem 0.9rem;
-        }
+        }}
 
-        .stTabs [role="tab"][aria-selected="true"] {
+        .stTabs [role="tab"][aria-selected="true"] {{
             background: linear-gradient(135deg, rgba(96,165,250,0.16), rgba(37,99,235,0.05));
             border: 1px solid rgba(59,130,246,0.18);
             color: var(--text);
             font-weight: 600;
-        }
+        }}
 
         .stExpander,
         .stAlert,
-        .stSuccess, .stWarning, .stInfo, .stError {
+        .stSuccess, .stWarning, .stInfo, .stError {{
             box-shadow: 0 10px 18px rgba(96,165,250,0.08);
-        }
+        }}
 
         .stMarkdown, .stMarkdown h1, .stMarkdown h2,
-        .stMarkdown h3, .stMarkdown p {
+        .stMarkdown h3, .stMarkdown p {{
             color: var(--text) !important;
-        }
+        }}
         </style>
         """,
         unsafe_allow_html=True,
