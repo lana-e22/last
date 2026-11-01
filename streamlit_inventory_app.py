@@ -584,7 +584,7 @@ def sidebar_actions(data):
 def main():
     st.set_page_config(page_title="Inventaris MWA", layout="wide")
     background_style = "" if not BACKGROUND_IMAGE.exists() else f"url('{BACKGROUND_IMAGE.name}')"
-   st.markdown(
+    st.markdown(
     """
     <style>
     :root {
