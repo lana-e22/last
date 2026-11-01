@@ -579,9 +579,9 @@ def main():
         """
         <style>
         :root {
-            --bg-1: #f5f8ff;
-            --bg-2: #eef5ff;
-            --bg-3: #edf9f3;
+            --bg-1: #edf7ff;
+            --bg-2: #e4f1ff;
+            --bg-3: #dfeeff;
             --panel: rgba(255,255,255,0.83);
             --panel-strong: rgba(255,255,255,0.97);
             --border: rgba(37,99,235,0.14);
@@ -602,9 +602,9 @@ def main():
         html, body, [data-testid="stAppViewContainer"] {
             color-scheme: light;
             background:
-                radial-gradient(circle at 15% 20%, rgba(96,165,250,0.22), transparent 18%),
-                radial-gradient(circle at 80% 82%, rgba(37,99,235,0.12), transparent 22%),
-                linear-gradient(135deg, var(--bg-1) 0%, #ffffff 25%, var(--bg-2) 52%, var(--bg-3) 100%);
+                radial-gradient(circle at 15% 20%, rgba(96,165,250,0.25), transparent 18%),
+                radial-gradient(circle at 80% 82%, rgba(59,130,246,0.18), transparent 22%),
+                linear-gradient(135deg, var(--bg-1) 0%, #f7fbff 26%, var(--bg-2) 52%, var(--bg-3) 100%);
             color: var(--text);
         }
 
