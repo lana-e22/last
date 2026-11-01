@@ -60,6 +60,7 @@ DEFAULT_ITEMS = [
         "totalStock": 2,
         "availableStock": 1,
     },
+]
 
 def load_data():
     if not DATA_FILE.exists():
