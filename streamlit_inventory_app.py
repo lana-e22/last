@@ -62,6 +62,34 @@ DEFAULT_ITEMS = [
     },
 ]
 
+DEFAULT_LOANS = [
+    {
+        "id": "L-1001",
+        "itemId": "2",
+        "itemName": "TV 85 INC",
+        "borrowerName": "Budi Santoso",
+        "borrowerId": "198203112001",
+        "quantity": 1,
+        "loanDate": "2026-10-25",
+        "returnDate": "2026-11-02",
+        "purpose": "Presentasi Proyek Klien",
+        "status": "Dipinjam",
+    },
+    {
+        "id": "L-1002",
+        "itemId": "5",
+        "itemName": "Kamera Sony Alpha A6400",
+        "borrowerName": "Siti Aminah",
+        "borrowerId": "siti@company.com",
+        "quantity": 1,
+        "loanDate": "2026-10-28",
+        "returnDate": "2026-11-04",
+        "purpose": "Rapat Tahunan Direksi",
+        "status": "Dipinjam",
+    },
+]
+
+
 def load_data():
     if not DATA_FILE.exists():
         data = {"categories": DEFAULT_CATEGORIES, "items": DEFAULT_ITEMS, "loans": DEFAULT_LOANS}
@@ -74,15 +102,15 @@ def load_data():
     except Exception:
         data = {"categories": DEFAULT_CATEGORIES, "items": DEFAULT_ITEMS, "loans": DEFAULT_LOANS}
 
-    data = normalize_data(data)
-    save_data(data)
-    return data
+    normalized = normalize_data(data)
+    save_data(normalized)
+    return normalized
 
 
 def save_data(data):
-    data = normalize_data(data)
+    normalized = normalize_data(data)
     with DATA_FILE.open("w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(normalized, f, ensure_ascii=False, indent=2)
 
 
 def normalize_data(data):
@@ -161,17 +189,6 @@ def format_date(date_value):
         return str(date_value)
 
 
-def get_default_item_form():
-    return {
-        "sku": "",
-        "name": "",
-        "category": "Elektronik",
-        "location": "",
-        "condition": "Baik",
-        "total_stock": 1,
-    }
-
-
 def render_dashboard(data):
     items = data["items"]
     loans = data["loans"]
@@ -193,7 +210,7 @@ def render_dashboard(data):
     if not recent:
         st.info("Tidak ada peminjaman aktif.")
     else:
-        pd_df = pd.DataFrame(
+        recent_df = pd.DataFrame(
             [
                 {
                     "Peminjam": loan.get("borrowerName"),
@@ -204,7 +221,7 @@ def render_dashboard(data):
                 for loan in recent
             ]
         )
-        st.dataframe(pd_df, use_container_width=True, hide_index=True)
+        st.dataframe(recent_df, use_container_width=True, hide_index=True)
 
     st.subheader("Stok Rendah / Rusak / Hilang")
     low_items = [item for item in items if int(item.get("availableStock") or 0) <= 1]
@@ -239,7 +256,7 @@ def render_inventory(data):
 
     filtered = []
     for item in items:
-        text = f"{item.get('name','')} {item.get('sku','')} {item.get('location','')}".lower()
+        text = f"{item.get('name', '')} {item.get('sku', '')} {item.get('location', '')}".lower()
         matches_search = search.lower() in text if search else True
         matches_category = category_filter == "Semua" or item.get("category") == category_filter
         matches_status = True
@@ -307,14 +324,22 @@ def render_inventory(data):
                     st.rerun()
 
     with st.expander("Edit / Hapus Barang"):
-        item_id = st.selectbox("Pilih Barang", [item["id"] for item in items], format_func=lambda x: next((i["name"] for i in items if i["id"] == x), x))
+        item_id = st.selectbox(
+            "Pilih Barang",
+            [item["id"] for item in items],
+            format_func=lambda x: next((i["name"] for i in items if i["id"] == x), x),
+        )
         if item_id:
             item = next((i for i in items if i["id"] == item_id), None)
             if item:
                 with st.form("edit_item_form"):
                     edit_sku = st.text_input("SKU", value=item.get("sku", ""))
                     edit_name = st.text_input("Nama Barang", value=item.get("name", ""))
-                    edit_category = st.selectbox("Kategori", categories, index=categories.index(item.get("category", categories[0])))
+                    edit_category = st.selectbox(
+                        "Kategori",
+                        categories,
+                        index=categories.index(item.get("category", categories[0])) if item.get("category") in categories else 0,
+                    )
                     edit_location = st.text_input("Lokasi", value=item.get("location", ""))
                     edit_condition = st.selectbox(
                         "Kondisi",
@@ -564,21 +589,13 @@ def main():
             --bg-1: #edf7ff;
             --bg-2: #e4f1ff;
             --bg-3: #dfeeff;
-            --panel: rgba(255,255,255,0.83);
-            --panel-strong: rgba(255,255,255,0.97);
             --border: rgba(37,99,235,0.14);
             --text: #1f2937;
             --muted: #52607a;
             --primary: #2563eb;
-            --primary-2: #60a5fa;
             --primary-3: #1d4ed8;
-            --success: #16a34a;
-            --success-soft: #ecfdf5;
-            --table-soft: #effaf4;
-            --table-soft-2: #e5f5eb;
             --table-border: rgba(22,163,74,0.20);
             --table-text: #17372d;
-            --shadow: rgba(37, 99, 235, 0.10);
         }
 
         html, body, [data-testid="stAppViewContainer"] {
@@ -590,19 +607,15 @@ def main():
             color: var(--text);
         }
 
-        .stApp {
-            background: transparent;
-        }
-
-        section.main > div {
-            background: transparent;
-        }
+        .stApp { background: transparent; }
+        section.main > div { background: transparent; }
 
         [data-testid="stHeader"] {
             background: rgba(255,255,255,0.58);
             border-bottom: 1px solid rgba(37,99,235,0.08);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 18px rgba(37,99,235,0.06);
         }
 
         [data-testid="stSidebar"] {
@@ -613,10 +626,7 @@ def main():
             box-shadow: 12px 0 30px rgba(37,99,235,0.06);
         }
 
-        .block-container {
-            padding-top: 2.2rem;
-            padding-bottom: 2rem;
-        }
+        .block-container { padding-top: 2.2rem; padding-bottom: 2rem; }
 
         h1, h2, h3, h4, p, label,
         .stSelectbox, .stTextInput, .stNumberInput,
@@ -625,33 +635,34 @@ def main():
             color: var(--text) !important;
         }
 
-        div[data-testid="stMetric"] > div {
-            background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(239,246,255,0.95));
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            box-shadow: 0 12px 26px var(--shadow);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        [data-testid="stMetricLabel"],
-        [data-testid="stMetricValue"] {
-            color: var(--text) !important;
-        }
-
+        div[data-testid="stMetric"] > div,
         .stDataFrame,
-        [data-testid="stDataFrame"] {
-            background: linear-gradient(180deg, rgba(245,250,255,0.95), rgba(255,255,255,0.97));
-            border: 1px solid var(--table-border);
-            border-radius: 16px;
-            box-shadow: 0 12px 25px rgba(34,197,94,0.10);
-            overflow: hidden;
+        [data-testid="stDataFrame"],
+        .stTabs [role="tablist"],
+        .stButton > button,
+        .stTextInput > div > div > input,
+        .stNumberInput > div > div > input,
+        .stTextArea > div > div > textarea,
+        .stSelectbox > div > div,
+        .stDateInput > div > div,
+        .stFileUploader > div > div,
+        .stDownloadButton > button,
+        .stForm,
+        .stExpander,
+        .stAlert,
+        [data-testid="stVerticalBlock"] > div,
+        [data-testid="stSidebar"] [data-testid="stVerticalBlock"] > div {
+            background: rgba(255,255,255,0.86);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 22px rgba(37,99,235,0.08), inset 0 1px 0 rgba(255,255,255,0.72);
         }
 
-        .stDataFrame > div,
-        [data-testid="stDataFrame"] > div {
-            border-radius: 16px;
-            background: transparent;
+        .stMetric > div {
+            box-shadow: 0 12px 26px rgba(37,99,235,0.1);
         }
 
         .stDataFrame th,
@@ -667,30 +678,6 @@ def main():
             background: rgba(255,255,255,0.20);
             color: var(--table-text);
             border-bottom: 1px solid rgba(22,163,74,0.10);
-        }
-
-        .stDataFrame tr:hover td,
-        [data-testid="stDataFrame"] tr:hover td {
-            background: rgba(255,255,255,0.28);
-        }
-
-        .stDataFrame, .stTabs [role="tablist"],
-        .stButton > button,
-        .stTextInput > div > div > input,
-        .stNumberInput > div > div > input,
-        .stTextArea > div > div > textarea,
-        .stSelectbox > div > div,
-        .stDateInput > div > div,
-        .stFileUploader > div > div,
-        .stDownloadButton > button,
-        .stForm {
-            background: rgba(255,255,255,0.86);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
         }
 
         .stButton > button,
@@ -733,34 +720,14 @@ def main():
             font-weight: 600;
         }
 
-        .stExpander {
-            background: rgba(255,255,255,0.62);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 10px 22px rgba(96,165,250,0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .stAlert {
-            background: linear-gradient(135deg, rgba(219,234,254,0.72), rgba(239,246,255,0.80));
-            border: 1px solid rgba(96,165,250,0.18);
-            color: var(--text);
-        }
-
+        .stExpander,
+        .stAlert,
         .stSuccess, .stWarning, .stInfo, .stError {
-            background: rgba(255,255,255,0.5);
-            border: 1px solid rgba(37,99,235,0.10);
-            color: var(--text);
+            box-shadow: 0 10px 18px rgba(96,165,250,0.08);
         }
 
         .stMarkdown, .stMarkdown h1, .stMarkdown h2,
         .stMarkdown h3, .stMarkdown p {
-            color: var(--text) !important;
-        }
-
-        .css-1d391kg, .css-18e3th9,
-        .css-1cyr2pc, .css-1v0mbdj {
             color: var(--text) !important;
         }
         </style>
