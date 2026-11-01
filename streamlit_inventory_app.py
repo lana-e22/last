@@ -642,21 +642,21 @@ def main():
     unsafe_allow_html=True,
 )
 
-    st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
+         st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
 
-    data = load_data()
-    sidebar_actions(data)
+            data = load_data()
+        sidebar_actions(data)
 
-    dashboard, inventory, loans = st.tabs(["Dashboard", "Inventori", "Peminjaman"])
+       dashboard, inventory, loans = st.tabs(["Dashboard", "Inventori", "Peminjaman"])
 
-    with dashboard:
-        render_dashboard(data)
+            with dashboard:
+         render_dashboard(data)
 
-    with inventory:
+            with inventory:
         render_inventory(data)
 
-    with loans:
+            with loans:
         render_loans(data)
 
-    if __name__ == "__main__":
+          if __name__ == "__main__":
     main()
