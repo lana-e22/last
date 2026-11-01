@@ -642,7 +642,7 @@ def main():
     unsafe_allow_html=True,
 )
 
-st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
+    st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
 
     data = load_data()
     sidebar_actions(data)
@@ -658,5 +658,5 @@ st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
     with loans:
         render_loans(data)
 
-if __name__ == "__main__":
+    if __name__ == "__main__":
     main()
