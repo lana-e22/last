@@ -584,13 +584,22 @@ def sidebar_actions(data):
 def main():
     st.set_page_config(page_title="Inventaris MWA", layout="wide")
     background_style = "" if not BACKGROUND_IMAGE.exists() else f"url('{BACKGROUND_IMAGE.name}')"
+    import streamlit as st
     st.markdown(
     """
     <style>
     :root {
-        --card-bg: rgba(255,255,255,0.62);
-        --card-border: rgba(15,23,42,0.08);
-        --card-shadow: rgba(15,23,42,0.12);
+        --bg-main: #f8fafc;
+        --card-bg: rgba(255, 255, 255, 0.75);
+        --card-border: rgba(226, 232, 240, 0.8);
+        --card-shadow: rgba(15, 23, 42, 0.05);
+        --accent-glow: rgba(99, 102, 241, 0.12);
+        --text-primary: #0f172a;
+    }
+
+    .stApp {
+        background-color: var(--bg-main) !important;
+        color: var(--text-primary) !important;
     }
 
     .stDataFrame,
@@ -608,8 +617,18 @@ def main():
     .stForm {
         background: var(--card-bg) !important;
         border: 1px solid var(--card-border) !important;
-        border-radius: 16px !important;
-        box-shadow: 0 10px 24px var(--card-shadow), 0 2px 8px rgba(37,99,235,0.06) !important;
+        border-radius: 14px !important;
+        box-shadow: 0 10px 25px -5px var(--card-shadow), 0 8px 10px -6px var(--accent-glow) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        transition: all 0.25s ease-in-out !important;
+    }
+
+    .stButton > button:hover,
+    .stDownloadButton > button:hover {
+        border-color: rgba(99, 102, 241, 0.4) !important;
+        box-shadow: 0 12px 20px -5px rgba(99, 102, 241, 0.2) !important;
+        transform: translateY(-1px);
     }
 
     div[data-testid="stVerticalBlockBorderWrapper"],
@@ -621,7 +640,7 @@ def main():
     unsafe_allow_html=True,
 )
 
-    st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
+    st.title("Inventaris Mediawatch Attarmasie")
 
     data = load_data()
     sidebar_actions(data)
