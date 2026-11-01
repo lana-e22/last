@@ -5,6 +5,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+st.set_page_config(page_title="Inventaris MWA", layout="wide")
+
 DATA_FILE = Path(__file__).with_name("inventory_data.json")
 BACKGROUND_IMAGE = Path(__file__).with_name("background.png")
 
@@ -640,7 +642,7 @@ def main():
     unsafe_allow_html=True,
 )
 
-    st.title("Inventaris Mediawatch Attarmasie")
+st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
 
     data = load_data()
     sidebar_actions(data)
@@ -655,7 +657,6 @@ def main():
 
     with loans:
         render_loans(data)
-
 
 if __name__ == "__main__":
     main()
