@@ -506,6 +506,7 @@ def render_loans(data):
             for loan in group:
                 if loan.get("status") == "Dipinjam":
                     col_return, col_edit, col_delete = st.columns([1, 1, 1])
+
                     with col_return:
                         return_key = f"return_{label}_{loan.get('id')}"
                         if st.button(f"Kembalikan: {loan.get('id')}", key=return_key):
@@ -513,10 +514,12 @@ def render_loans(data):
                             save_data(data)
                             st.success("Barang berhasil dikembalikan.")
                             st.rerun()
+
                     with col_edit:
                         edit_key = f"edit_loan_{label}_{loan.get('id')}"
                         if st.button(f"Edit: {loan.get('id')}", key=edit_key):
                             st.session_state["edit_loan_id"] = loan.get("id")
+
                     with col_delete:
                         delete_key = f"delete_loan_{label}_{loan.get('id')}"
                         if st.button(f"Hapus: {loan.get('id')}", key=delete_key):
