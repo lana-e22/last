@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 
 DATA_FILE = Path(__file__).with_name("inventory_data.json")
-BACKGROUND_IMAGE = Path(__file__).with_name("background.jpg")
+BACKGROUND_IMAGE = Path(__file__).with_name("background.png")
 
 DEFAULT_CATEGORIES = ["Elektronik", "Aksesoris", "HDMI", "StopKontak", "Kabel", "Lainnya"]
 
