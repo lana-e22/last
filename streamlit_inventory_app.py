@@ -43,8 +43,8 @@ DEFAULT_ITEMS = [
     {
         "id": "4",
         "sku": "MBS-001",
-        "name": "Meja Lipat Portable",
-        "category": "Mebel",
+        "name": "HDMI",
+        "category": "Kabel",
         "location": "Rak Mebel B",
         "condition": "Baik",
         "totalStock": 10,
@@ -645,7 +645,7 @@ def main():
         }
 
         div[data-testid="stMetric"] > div {
-            background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(239,246,255,0.78));
+            background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(225,242,254,0.9));
             border: 1px solid var(--border);
             outline: 1px solid rgba(59,130,246,0.18);
             outline-offset: 0;
@@ -662,9 +662,9 @@ def main():
 
         .stDataFrame,
         [data-testid="stDataFrame"] {
-            background: linear-gradient(180deg, rgba(232,248,238,0.96), rgba(214,241,223,0.90));
+            background: linear-gradient(180deg, rgba(220,237,255,0.85), rgba(255,255,255,0.9));
             border: 1px solid var(--table-border);
-            outline: 1px solid rgba(82,165,116,0.42);
+            outline: 1px solid rgba(180,215,255,0.5);
             outline-offset: 0;
             border-radius: 16px;
             box-shadow: 0 14px 28px rgba(71, 126, 88, 0.16);
@@ -722,14 +722,14 @@ def main():
 
         .stButton > button,
         .stDownloadButton > button {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+            background: linear-gradient(135deg, rgba(15,32,67,1) 0%, rgba(27,54,112,1) 100%);
             border: 1px solid rgba(255,255,255,0.75);
-            outline: 1px solid rgba(37,99,235,0.35);
+            outline: 1px solid rgba(15,32,67,0.4);
             outline-offset: 0;
             color: white !important;
             font-weight: 700;
             border-radius: 12px;
-            box-shadow: 0 12px 24px rgba(37,99,235,0.20);
+            box-shadow: 0 12px 24px rgba(15,32,67,0.25);
             transition: all 0.2s ease;
         }
 
