@@ -5,8 +5,6 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-st.set_page_config(page_title="Inventaris MWA", layout="wide")
-
 DATA_FILE = Path(__file__).with_name("inventory_data.json")
 BACKGROUND_IMAGE = Path(__file__).with_name("background.png")
 
@@ -117,6 +115,9 @@ def save_data(data):
 
 
 def normalize_data(data):
+    if not isinstance(data, dict):
+        data = {}
+
     categories = data.get("categories") or DEFAULT_CATEGORIES
     items = data.get("items") or DEFAULT_ITEMS
     loans = data.get("loans") or DEFAULT_LOANS
@@ -128,7 +129,10 @@ def normalize_data(data):
     for i, item in enumerate(items or []):
         if not isinstance(item, dict):
             continue
-        total_stock = int(item.get("totalStock") or 0)
+        total_stock = max(0, int(item.get("totalStock") or 0))
+        available_stock = max(0, int(item.get("availableStock") or 0))
+        if available_stock > total_stock:
+            available_stock = total_stock
         normalized_items.append(
             {
                 "id": str(item.get("id") or f"item-{i + 1}"),
@@ -137,8 +141,8 @@ def normalize_data(data):
                 "category": str(item.get("category") or "Lainnya").strip(),
                 "location": str(item.get("location") or "").strip(),
                 "condition": str(item.get("condition") or "Baik").strip(),
-                "totalStock": max(0, total_stock),
-                "availableStock": max(0, int(item.get("availableStock") or 0)),
+                "totalStock": total_stock,
+                "availableStock": available_stock,
             }
         )
 
@@ -585,77 +589,78 @@ def sidebar_actions(data):
 
 def main():
     st.set_page_config(page_title="Inventaris MWA", layout="wide")
-    background_style = "" if not BACKGROUND_IMAGE.exists() else f"url('{BACKGROUND_IMAGE.name}')"
-    import streamlit as st
+
     st.markdown(
-    """
-    <style>
-    :root {
-        --bg-main: #f8fafc;
-        --card-bg: rgba(255, 255, 255, 0.75);
-        --card-border: rgba(226, 232, 240, 0.8);
-        --card-shadow: rgba(15, 23, 42, 0.05);
-        --accent-glow: rgba(99, 102, 241, 0.12);
-        --text-primary: #0f172a;
-    }
+        """
+        <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(226, 232, 240, 0.8);
+            --card-shadow: rgba(15, 23, 42, 0.05);
+            --accent-glow: rgba(99, 102, 241, 0.12);
+            --text-primary: #0f172a;
+        }
 
-    .stApp {
-        background-color: var(--bg-main) !important;
-        color: var(--text-primary) !important;
-    }
+        .stApp {
+            background-color: var(--bg-main) !important;
+            color: var(--text-primary) !important;
+        }
 
-    .stDataFrame,
-    [data-testid="stDataFrame"],
-    .stExpander,
-    .stTabs [role="tablist"],
-    .stButton > button,
-    .stTextInput > div > div > input,
-    .stNumberInput > div > div > input,
-    .stTextArea > div > div > textarea,
-    .stSelectbox > div > div,
-    .stDateInput > div > div,
-    .stFileUploader > div > div,
-    .stDownloadButton > button,
-    .stForm {
-        background: var(--card-bg) !important;
-        border: 1px solid var(--card-border) !important;
-        border-radius: 14px !important;
-        box-shadow: 0 10px 25px -5px var(--card-shadow), 0 8px 10px -6px var(--accent-glow) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        transition: all 0.25s ease-in-out !important;
-    }
+        .stDataFrame,
+        [data-testid="stDataFrame"],
+        .stExpander,
+        .stTabs [role="tablist"],
+        .stButton > button,
+        .stTextInput > div > div > input,
+        .stNumberInput > div > div > input,
+        .stTextArea > div > div > textarea,
+        .stSelectbox > div > div,
+        .stDateInput > div > div,
+        .stFileUploader > div > div,
+        .stDownloadButton > button,
+        .stForm {
+            background: var(--card-bg) !important;
+            border: 1px solid var(--card-border) !important;
+            border-radius: 14px !important;
+            box-shadow: 0 10px 25px -5px var(--card-shadow), 0 8px 10px -6px var(--accent-glow) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            transition: all 0.25s ease-in-out !important;
+        }
 
-    .stButton > button:hover,
-    .stDownloadButton > button:hover {
-        border-color: rgba(99, 102, 241, 0.4) !important;
-        box-shadow: 0 12px 20px -5px rgba(99, 102, 241, 0.2) !important;
-        transform: translateY(-1px);
-    }
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {
+            border-color: rgba(99, 102, 241, 0.4) !important;
+            box-shadow: 0 12px 20px -5px rgba(99, 102, 241, 0.2) !important;
+            transform: translateY(-1px);
+        }
 
-    div[data-testid="stVerticalBlockBorderWrapper"],
-    div[data-testid="stHorizontalBlock"] {
-        background: transparent !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+        div[data-testid="stVerticalBlockBorderWrapper"],
+        div[data-testid="stHorizontalBlock"] {
+            background: transparent !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.title("Sistem Manajemen Inventaris & Peminjaman Barang")
-    
-        data = load_data()
-        sidebar_actions(data)
-    
-        dashboard, inventory, loans = st.tabs(["Dashboard", "Inventori", "Peminjaman"])
-    
-        with dashboard:
-            render_dashboard(data)
-    
-        with inventory:
-            render_inventory(data)
-    
-        with loans:
-            render_loans(data)
-    
-    if __name__ == "__main__":
-        main()
+
+    data = load_data()
+    sidebar_actions(data)
+
+    dashboard, inventory, loans = st.tabs(["Dashboard", "Inventori", "Peminjaman"])
+
+    with dashboard:
+        render_dashboard(data)
+
+    with inventory:
+        render_inventory(data)
+
+    with loans:
+        render_loans(data)
+
+
+if __name__ == "__main__":
+    main()
